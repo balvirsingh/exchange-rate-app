@@ -9,7 +9,12 @@ RUN a2enmod rewrite
 #     && RUN docker-php-ext-install pdo_mysql
 RUN apt-get update && apt-get install -y \
     wget \
-    && docker-php-ext-install pdo_mysql
+    git \
+    libzip-dev \
+    unzip \
+    libicu-dev \
+    zlib1g-dev \
+    && docker-php-ext-install zip pdo_mysql
 
 
 

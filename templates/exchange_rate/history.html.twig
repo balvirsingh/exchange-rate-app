@@ -1,0 +1,56 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Exchange Rate{% endblock %}
+
+
+{% block body %}
+
+    <h1>Exchange Rate App</h1>
+    <hr/><br/>
+    
+    {% for flashMessage in app.flashes('success') %}
+        <div class="flash-message success">
+            {{ flashMessage }}
+        </div>
+    {% endfor %}
+
+    {% for flashMessage in app.flashes('error') %}
+        <div class="flash-message error">
+            {{ flashMessage }}
+        </div>
+    {% endfor %}
+
+    <form method="POST" action="{{ path('exchange_rate_update') }}">
+        <label for="fromCurrency">From Currency:</label>
+        {% set selectedValue = fromCurrency ? fromCurrency : 'INR' %}
+        <select id="fromCurrency" name="from_currency">
+            {% for currency in currencies %}
+                <option value="{{ currency.code }}" {{ currency.code == selectedValue ? 'selected' : '' }}>{{ currency.name }}</option>
+            {% endfor %}
+        </select>
+        
+        <label for="toCurrency">To Currency:</label>
+        {% set selectedValue = toCurrency ? toCurrency : 'EUR' %}
+        <select id="toCurrency" name="to_currency">
+            {% for currency in currencies %}
+                <option value="{{ currency.code }}" {{ currency.code == selectedValue ? 'selected' : '' }}>{{ currency.name }}</option>
+            {% endfor %}
+        </select>
+
+        <button type="submit">Get Current Rate</button>
+    </form>
+    <br/>
+    <h1>Exchange Rate History</h1>
+    <table>
+        <tr>
+            <th>Date</th>
+            <th>Rate</th>
+        </tr>
+        {% for exchangeRate in exchangeRates %}
+            <tr>
+                <td>{{ exchangeRate.createdAt|date('Y-m-d H:i:s') }}</td>
+                <td>{{ exchangeRate.rate }}</td>
+            </tr>
+        {% endfor %}
+    </table>
+{% endblock %}

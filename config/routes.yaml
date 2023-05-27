@@ -1,0 +1,8 @@
+exchange_rate_history:
+  path: /exchange-rate/history/{fromCurrency}/{toCurrency}
+  controller: App\Controller\ExchangeRateController::history
+  defaults: { fromCurrency: "", toCurrency: "" }
+
+exchange_rate_update:
+  path: /exchange-rate/update
+  controller: App\Controller\ExchangeRateController::update
